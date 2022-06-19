@@ -1,0 +1,3 @@
+ArgumentError: Package GraphRecipes not found in current path:
+- Run `import Pkg; Pkg.add("GraphRecipes")` to install the GraphRecipes package.
+
