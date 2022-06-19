@@ -43,8 +43,8 @@
 :root {
   --block-background: hsl(0, 0%, 94%);
   --output-background: hsl(0, 0%, 98%);
-  --small: 10px;
-  --normal: 14px;
+  --small: 11px;
+  --normal: 12px;
   --text-color: hsv(0, 0%, 20%);
 }
 
