@@ -7,7 +7,7 @@ around us, from the human brain to the internet to our circle of friends. All ne
 order and adhere to basic laws. Understanding the structure and behavior of these networks will allow us
 to achieve amazing things, such as finding terrorists and halting a disease epidemic before it spreads.
 
-This course provides a broad overview of network science-addressing the computational techniques of
+This course provides a broad overview of network science -- addressing the computational techniques of
 network science as well as their applications and implications in biology, sociology, technology, and
 other fields. Across this course, we will build networks in a variety of fields, demonstrating that
 social networks, the internet, and cells are more alike than they are distinct -- revealing crucial new
