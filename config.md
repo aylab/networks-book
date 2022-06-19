@@ -21,7 +21,7 @@ ignore = ["node_modules/"]
 generate_rss = true
 website_title = "Networks"
 website_descr = "Networks: Friends, Terrorists & Epidemics"
-website_url = "https://syedtaz.github.io/network-book/"
+website_url = "https://syedtaz.github.io/networks-book/"
 +++
 
 <!--
