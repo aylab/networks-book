@@ -2,6 +2,8 @@
 Add here global page variables to use throughout your website.
 -->
 
+@def prepath = "networks-book"
+
 +++
 author = "Tazmilur Saad, Ahmet Ay"
 mintoclevel = 2
