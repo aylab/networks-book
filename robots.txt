@@ -1,4 +1,4 @@
-Sitemap: https://syedtaz.github.io/network-book/sitemap.xml
+Sitemap: https://syedtaz.github.io/networks-book/sitemap.xml
 
 User-agent: *
 Disallow:
