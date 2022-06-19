@@ -299,7 +299,7 @@ td {
 
 body { counter-reset: eqnum; }
 
-.katex { font-size: 1em !important; }
+.katex { font-size: 1.2em !important; }
 
 .katex-display .katex {
   /* Overwrite KaTeX settings. */
