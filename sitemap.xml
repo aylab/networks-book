@@ -2,7 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
+    <loc>https://syedtaz.github.io/networks-book/real/index.html</loc>
+    <lastmod>2022-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://syedtaz.github.io/networks-book/schedule/index.html</loc>
+    <lastmod>2022-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://syedtaz.github.io/networks-book/evolving/index.html</loc>
     <lastmod>2022-06-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -15,6 +27,12 @@
 </url>
 <url>
     <loc>https://syedtaz.github.io/networks-book/index.html</loc>
+    <lastmod>2022-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://syedtaz.github.io/networks-book/formation/index.html</loc>
     <lastmod>2022-06-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
