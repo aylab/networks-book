@@ -4,6 +4,59 @@
 
 > A graph with no vertices and no edges is the null graph, regarded by some authors as a _pointless_ concept. - Gordon Royle
 
+## Degree
+
+The degree of a node represents the number of connections it has. For example, a high degree node in a social network can signify
+a popular individual. Similarly, a research paper with a significantly large degree might be influential in the field. The degree
+of a node $i$ is designated as $k_i$.
+
+For an _undirected graph_, the degree of a node is simply the number of nodes it is adjacent to. Moreover, the total number of
+edges $|E|$ can also be derived by summing the degree of every node and halving the sum to account for the fact that each edge is counted twice.
+
+$$
+|E| = \dfrac{1}{2} \sum_{i=1}^{N}k_i
+$$
+
+Similarly, the average degree is simply this sum over the number of nodes without adjusting for the double counting.
+
+$$
+\langle k \rangle = \dfrac{1}{N} \sum_{i=1}^{N}k_i = \dfrac{2|E|}{N}
+$$
+
+Consider the following undirected network. There are 5 vertices and each of them are connected to 4 others. Since this is the maximum amount of edges each node in this
+graph can have, this is known as the complete graph with 5 vertices or $K_5$.
+
+```julia:./code/degree
+#hideall
+using GraphRecipes
+using Plots
+
+n = 5
+const C = [0 1 1 1 1;1 0 1 1 1;1 1 0 1 1;1 1 1 0 1;1 1 1 1 0]
+
+graphplot(C,
+          markersize = 0.2,
+          markercolor = range(colorant"yellow", stop=colorant"red", length=n),
+          names = 1:3,
+          fontsize = 10,
+          linecolor = :darkgrey
+          )
+
+savefig(joinpath(@OUTPUT, "degree.png"))
+```
+
+\fig{output/degree.png}
+
+The degree metrics for $K_5$ are as follows: $|E| = \dfrac{4 + 4 + 4 + 4 + 4}{2} = 10$ and $\langle k \rangle = \dfrac{2 \cdot 10}{5} = 4$.
+
+```python
+# Code for creating K_5 and calculating |E| and <k>
+
+G = nx.complete_graph(5)
+E = sum([x for _, x in G.degree()]) / 2
+avg = 2*E/G.number_of_nodes()
+```
+
 ## Graph Connectivity
 
 One of the most common questions you can ask about a network is whether nodes $u$ and $v$ are connected or not. For example,
@@ -20,6 +73,7 @@ the paths $(1,3)$, $(1,2)$ and $(3,1),(1,2)$ connect every pair of vertices.
 using GraphRecipes
 using Plots
 
+n = 3
 const B = [0 1 1; 1 0 0; 1 0 0]
 
 graphplot(B,
@@ -70,3 +124,7 @@ savefig(joinpath(@OUTPUT, "test.png"))
 ```
 
 \fig{output/test.png}
+
+## Paths
+
+## Transitivity
