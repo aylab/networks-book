@@ -3,10 +3,10 @@
 using GraphRecipes
 using Plots
 
-n = 3
-const B = [0 1 1; 1 0 0; 1 0 0]
+n = 5
+const C = [0 1 1 1 1;1 0 1 1 1;1 1 0 1 1;1 1 1 0 1;1 1 1 1 0]
 
-graphplot(B,
+graphplot(C,
           markersize = 0.2,
           markercolor = range(colorant"yellow", stop=colorant"red", length=n),
           names = 1:3,
@@ -14,4 +14,4 @@ graphplot(B,
           linecolor = :darkgrey
           )
 
-savefig(joinpath(@OUTPUT, "simple_graph.png"))
+savefig(joinpath(@OUTPUT, "degree.png"))
