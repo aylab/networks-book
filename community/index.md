@@ -32,6 +32,21 @@ This problem falls within the generic class of discrete optimization problems, p
 
 However, if there are solutions that have modularity almost as good as the overall maximum but which correspond to very different divisions of the network, in which the assignment of nodes to groups is completely unlike the optimal division, then modularity maximization may fail. It may find a division with a high modularity score, but that division will not be a good guide to the true optimal division.
 
+Given a graph $G$, the following code will create a mapping between the communities and the list of nodes in that community. For example, `c[0]` contains the nodes in the first (zeroth) community, `c[1]` contains the nodes in the second community and so on.
+
+```python
+from networkx.algorithms.community import greedy_modularity_communities
+c = greedy_modularity_communities(G)
+```
+
+If we want the modularity score of a particular partition of a graph $G$, we can use the following function where $G$ is the original graph and ` [{0, 1, 2}, {3, 4, 5}]`
+represents a division of the graph into two communities.
+
+```python
+import networkx.algorithms.community as nx_comm
+nx_comm.modularity(G, [{0, 1, 2}, {3, 4, 5}])
+```
+
 #### Simple Modularity Maximization Algorithm
 
 The algorithm starts by dividing the network into two equally sized groups at random. Then it considers each node in the network in turn and calculates how much the modularity would change if that node were moved to the other group. In terms of the previous equation, this is equivalent to momentarily flipping the sign of each of the variables $s_i$ in turn and calculating the effect on $Q$.
@@ -53,6 +68,13 @@ First, we generate a random walk long enough to visit all parts of the network. 
 
 The InfoMap method is in some ways rather similar to modularity maximization: it defines a quality function, in this case the entropy L, which characterizes how good a particular community division is, then optimizes it over possible divisions to find the best one.
 
+InfoMap is not implemented in NetworkX, but can be used from another library known as `cdlib`.
+
+```python
+from cdlib import algorithms
+coms = algorithms.infomap(G)
+```
+
 ## Statistical Inference
 
 Some of the most powerful and flexible methods for community detection are those based on statistical inference. These methods work by fitting a network model — typically some kind of random graph — to observed network data. The parameters of the fit can tell us about features of the network, including community structure, in much the same way that the fit of a straight line through a set of data points can tell us about their slope.
@@ -69,6 +91,15 @@ Our algorithm for detecting communities is then as follows. We calculate the bet
 
 As we remove one edge after another, an initially connected network will eventually split into two pieces, then into three, and so on. The progress of the algorithm can be represented using a tree or dendrogram. This algorithm is thus somewhat different from previous ones, in that it doesn’t give a single decomposition of a network into communities, but a set of different possibilities, ranging from coarse divisions into just a few large communities (at the top of the dendrogram) to fine divisions into many small communities (at the bottom). It is up to the user to decide which of the many divisions represented is most useful for their purposes.
 
+NetworkX implements the `Girvan-Newman` algorithm for betweenness-based edge removal. If we have a graph $G$, then the following code returns the first split in the dendogram
+
+```python
+comp = girvan_newman(G)
+tuple(sorted(c) for c in next(comp))
+```
+
+For further details see the [documentation](https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html).
+
 ### Hierarchical Clustering
 
 Hierarchical clustering is not so much a single algorithm as a class of algorithms, with many variations and alternatives. Hierarchical clustering is an agglomerative technique in which we start with the individual nodes of a network and join them together to form groups. The basic idea is to define a measure of similarity or connection strength between nodes, based on the network structure, and then join together the most similar nodes to form groups.
@@ -83,14 +114,15 @@ In the single-linkage clustering method, the similarity between the two groups i
 
 Tests of community detection on real-world networks rely on being able to find example networks where we know—or believe we know—the true division into communities, sometimes called the ground truth division. In most cases, the ground truth is established through a combination of insider knowledge of the network in question and consensus results from the application of many different community detection methods to the same network.
 
-Classic examples of networks whose community structure have been extensively studied include the Karate club network, the Dolphin social network and the political blog network of Adamic and Glance.
+Classic examples of networks whose community structure have been extensively studied include the Karate club network, the Dolphin social network and the political blog network of Adamic and Glance. Some of these are included in NetworkX.
+
+```python
+import networkx as nx
+G = nx.karate_club_graph()
+```
 
 ### Artificial Test Networks
 
 While real-world networks provide a test of community detection performance in life-like situations, they are limited in that there are a relatively small number of accepted test networks, their ground-truth community structure is not always 100% certain, and their structure cannot be varied to probe algorithm behavior. We cannot, for instance, make their communities larger or smaller, or change their number.
 
 A solution to these problems is to use artificial test networks, sometimes called synthetic networks, which contain a specific level or type of community structure planted within them. We can then test to see whether our community detection algorithms can detect this planted structure. While artificial networks are generally less realistic than their real-world counterparts, their structure can be varied in any way we please, and we can generate as many of them as we want, which gives us considerable flexibility to quantify the performance of our algorithms. In practice, algorithms are often tested on both real and synthetic networks, to make the most of the advantages each has to offer.
-
-The most common approach to generating artificial test networks for community detection is to use a stochastic block model. In the standard stochastic block model one divides n nodes into some number $q$ of groups then places an edge between each pair of nodes with independent probability $p_{rs}$, where $r$ and $s$ are the groups to which the nodes belong. The probabilities $p_{rs}$ form a $q \times q$ matrix of parameters whose values determine the community structure. In the most common variant of the model the parameters take just two values $p_{in}$ if $r=s$ and $p_{out}$ if $r \neq s$.
-
-If $p_{in} > p_{out}$ then edges are more likely within groups than between them and the network has traditional community structure with dense groups of nodes connected by sparser inter-group edges. Changing the values of $p_{in}$ and $p_{out}$ allows us to vary the difficulty of the community detection problem. If $p_{in}$ is much larger than pout then the communities in the network should stand out clearly and most algorithms should have little difficulty detecting them. However, if the difference between the two probabilities is small then there will be little to distinguish in-group edges from between-group ones and the community structure will be hard to pick out. Indeed if we let the difference go to zero then all edges in the network have equal probability and by definition there is no community structure at all. In this limit, therefore, all algorithms must fail.

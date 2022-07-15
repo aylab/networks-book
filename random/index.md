@@ -14,6 +14,16 @@ $$
 
 This is a useful definition for several reasons. First, it turns out to lend itself well to analytic calculations; many such average properties of random graphs can be calculated exactly, at least in the limit of large network size. Second, it often reflects exactly the thing we want to get at in making our model network in the first place. Very often we are interested in the typical properties of networks. We might want to know, for instance, what the typical diameter is of a network with a given number of edges. Certainly there are special cases of such networks that have particularly large or small diameters, but these don’t reflect the typical behavior. If it’s typical behavior we are after, then the ensemble average of a property is often a good guide. Third, it can be shown that the distribution of values for many network measures is sharply peaked, becoming concentrated more and more narrowly around the ensemble average as the size of the network becomes large, so that in the large-$n$ limit, essentially all values one is likely to encounter are very close to the mean.
 
+We can create a $G(n,m)$ random graph for a specified $n$ and $m$ using the following code:
+
+```python
+# For n=5 and m=2
+G = nx.gnm_random_graph(n=5, m=2)
+
+# You can specify if you want directed or not.
+G_prime = nx.gnm_random_graph(n=5, m=2, directed = True)
+```
+
 ## $G(n,p)$
 
 In $G(n, p)$ we fix not the number but the probability of edges between nodes. Again we have n nodes, but now we place an edge between each distinct pair with independent probability $p$. In this model the number of edges is not fixed. Indeed it is possible that the network could have no edges at all, or it could have edges between every distinct pair of nodes.
