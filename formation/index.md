@@ -32,11 +32,18 @@ $$
 \Pi (k_i) = \dfrac{k_i}{\sum_{j} k_j}
 $$
 
+```python
+import networkx as nx
+G = nx.barabasi_albert(n, m)
+```
+
 ### First Mover's Advantage
 
 As the size of the network increases, existing nodes have to compete with a larger group of nodes for an incoming node's attention. Therefore, we might expect nodes that arrived early in the timeline to have a higher degree in the long run since they will have a higher opportunity to bind with an incoming node. This phenomenon is called the first mover's advantage - essentially, any profit gained early on will snowball into a huge lead, leaving the rest behind. The Barabasi-Albert model displays the first mover's effect, and hubs are gigantic because they arrived early in the network formation.
 
 The Barabasi-Albert model incorporates growth and preferential attachment which allows networks to grow and older nodes to outcompete younger nodes to form hubs and display scale-free properties.
+
+A Barabasi-Albert graph with a predefined number of nodes $n$ and number of edges $m$ can be created using the following code:
 
 ### Necessary Or Sufficient?
 

@@ -19,6 +19,25 @@ In some other cases the largest component fills the network because of the way t
 
 Can a network have two or more large components that fill a sizable fraction of the entire network? Usually the answer to this question is no. If we had a network of $n$ nodes that was divided into two large components of about $\dfrac{1}{2}n$ nodes each, then there would be $\dfrac{1}{4}n^{2}$ possible pairs of nodes such that one node was in one large component and the other node in the other large component. If there is an edge between any of these pairs of nodes, then the two components are joined together and are in fact just one component. Except in very special cases, it is highly unlikely that not a single such pair would be connected, and hence also highly unlikely that we will have two large components.
 
+Given a graph $G$ ...
+
+```python
+# Returns the number of components.
+num = nx.number_connected_components(G)
+
+# Returns the connected components of a graph
+comps = nx.connected_components(G)
+
+# You can sort this by length.
+comp_sorted = sorted(comps, key=len, reverse=True)
+
+# If you only want the largest connected component.
+largest_cc = max(nx.connected_components(G), key=len)
+
+# To create the induced subgraph of each component use:
+S = [G.subgraph(c).copy() for c in comps]
+```
+
 ### Directed Networks
 
 The component structure for directed networks is more complicated than for undirected ones. Directed networks have weakly and strongly connected components.
@@ -26,6 +45,16 @@ The component structure for directed networks is more complicated than for undir
 A strongly connected component is a set of nodes such that each can reach and is reachable from all others in the set along a directed path. As with weakly connected components, there is typically one large strongly connected component in a directed network and a selection of small ones. Associated with each strongly connected component is an out-component (the set of all nodes that can be reached along a directed path from any starting point in the strongly connected component) and an in-component (the set of nodes from which the strongly connected component can be reached).
 
 Not all directed networks have a large strongly connected component. In particular, an acyclic network has no strongly connected components of size greater than one since if two nodes belong to the same strongly connected component then by definition there exists a directed path in both directions between them, and hence there is a cycle from one node to the other and back. Real-life networks are not usually perfectly acyclic, but some, such as citation networks, are approximately so (see Section 3.2). Such networks typically have a few small strongly connected components of two or perhaps three nodes each, but no large ones.
+
+```python
+# Returns the number of components.
+num = nx.number_strongly_connected_components(G)
+
+# Returns the connected components of a graph
+comps_0 = nx.strongly_connected_components(G)
+comps_1 = nx.kosaraju_strongly_connected_components(G)
+comps_2 = nx.strongly_connected_components_recursive(G)
+```
 
 ## Shortest Paths
 
@@ -43,6 +72,22 @@ One can also examine the diameter of a network which is the length of the longes
 
 Another interesting twist on the small-world effect was discussed by Mil- gram in his original paper on the problem. He noticed, in the course of his letter-passing experiments, that most of the letters destined for a given target person passed through just one or two acquaintances of the target. This idea, that one or two of your acquaintances are espe- cially well connected and responsible for most of the connection between you and the rest of the world, has been dubbed _funneling_. For instance, in the coauthorship network of physicists we find that, for physicists having five or more collaborators, 48% of shortest paths go through a single neighbor of the average node, the remaining 52% being distributed over the other four or more neighbors. A similar result is seen in the Internet: among nodes having degree five or greater in a May 2005 snapshot of Internet structure at the autonomous system level, an average of 49% of shortest paths go through a single neighbor of the average node.
 
+Given a graph $G$...
+
+```python
+# Returns shortest path between specified node and target.
+single = nx.shortest_path(G, source=0, target=4)
+
+# Returns multiple shortest paths if they exist.
+multiple = [p for p in nx.all_shortest_paths(G, source=0, target=2)]
+
+# Returns shortest paths for all pairs of nodes.
+all_pairs = dict(nx.all_pairs_shortest_path(G))
+
+# Returns the shortest path for weighted graphs.
+weighted = nx.dijkstra_path(G, 0, 4)
+```
+
 ## Degree Distributions
 
 Consider an undirected network. Let us define $p_k$ to be the fraction of nodes that have degree $k$. The quantities $p_k$ represent the degree distribution of the network. They tell us the frequency with which nodes of different degrees appear in the network.
@@ -53,6 +98,11 @@ It is probably obvious, but bears saying anyway, that a knowledge of the degree 
 It is often illuminating to make a plot of the degree distribution of a large network as a function of $k$. The figure reveals something interesting: most of the nodes in the network have low degree—one or two or three—but there is a significant “tail” to the distribution, corresponding to nodes with substantially higher degree. We call such a well-connected nodes a hub.
 
 In fact, it turns out that almost all real-world networks have degree distributions with a tail of high-degree hubs like this. In the language of statistics we say that the degree distribution is right-skewed.
+
+```python
+# Returns the degree sequence of a graph.
+degree_sequence = [d for n, d in G.degree()]
+```
 
 ### Power Laws
 

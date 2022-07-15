@@ -36,6 +36,20 @@ $$
 
 where $m$ is the number of edges in the network. $G(n,p)$ it is most closely associated with the names of Paul Erdős and Alfréd Rényi, who published a celebrated series of papers about the model in the late 1950s and early 1960s. If you read scientific papers on this subject, you will sometimes find the model referred to as the “Erdős–Rényi model” or the “Erdős–Rényi random graph” in honor of their contribution.
 
+We can create a $G(n,p)$ random graph for a specified $n$ and $m$ using the following code:
+
+```python
+import networkx as nx
+
+G = nx.gnp_random_graph(n = 20, p = 0.5)
+
+# You can specify if you want directed or not.
+G_prime = nx.gnp_random_graph(n= 20, p = 0.5, directed = True)
+
+# You should use this version for sparse graphs.
+G_sparse = nx.fast_gnp_random_graph(n = 20, p = 0.01)
+```
+
 ### Mean edges and mean degree
 
 We have said that the number of edges $m$ in the model is not fixed, but we can calculate its mean $\langle m \rangle$ easily enough: the average number of edges between a single pair of nodes is $p$ by definition, and the average number between all $\binom{n}{2}$ pairs is simply $\binom{n}{2}$ times this, or
@@ -132,6 +146,17 @@ We are sometimes interested in the case where it is the degree distribution of t
 One small catch with this model is that we must make sure that the degrees $k_i$ that we generate add to an even number. This is not a big problem however. If we find that we have generated degrees that add to an odd number, we just throw them away and generate another set.
 
 Two important special cases of the model with specified degree distribution are the cases with Poisson and power-law distributions. If we choose a Poisson distribution of node degrees and then generate the corresponding configuration model network, we recover—very nearly—the standard random graph $G(n, p)$. The two are not quite the same since the configuration model can, as we have said, contain multiedges and self-edges, while $G(n, p)$, as normally defined, cannot. Since the density of multiedges and self-edges is small, however, the difference can often be ignored and, in particular, most properties of the configuration model and the Poisson random graph are the same in the limit of large $n$. Although Poisson degree distributions are rare in real-world networks, the Poisson case can serve as a useful check on our calculations when working with the configuration model. A power-law degree distribution provides a more interesting special case.
+
+If you have a specified degree sequence, you can use the following code to create a configuration model.
+
+```python
+sequence = [1,2,3,4,5,6]
+G = nx.configuration_model(sequence)
+
+# Since the configuration model can create multigraphs, use the following to remove them.
+G = nx.Graph(G)
+G.remove_edges_from(nx.selfloop_edges(G))
+```
 
 ## Properties of the Configuration Model
 
